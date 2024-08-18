@@ -13,10 +13,10 @@ export default function HomePage() {
         fetch('/api/user-in-room').then((response) => response.json()).then((data) => {
             setRoomCode(data.code);
         });
-    }, [])
+    }, []);
 
-    const componentDidMount = async () => {
-        
+    const clearRoomCode = () => {
+        setRoomCode(null);
     }
 
     const renderHomePage = () => {
@@ -47,7 +47,7 @@ export default function HomePage() {
             <Route exact path='/' element={roomCode ? <Navigate to={`room/${roomCode}`} /> : renderHomePage()} />
             <Route path='/join' element={<RoomJoinPage />} />
             <Route path='/create' element={<CreateRoomPage />} />
-            <Route path='/room/:roomCode' element={<Room />} />
+            <Route path='/room/:roomCode' element={<Room leaveRoomCallback={clearRoomCode}/>} />
         </Routes>
     </Router>)
 
