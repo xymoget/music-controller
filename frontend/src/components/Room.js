@@ -23,6 +23,7 @@ export default function Room(props) {
             }
         }
         ).then((data) => {
+            console.log(data)
             setIsHost(data.is_host);
             setVotesToSkip(data.votes_to_skip)
             setGuestCanPause(data.guest_can_pause)
@@ -39,7 +40,6 @@ export default function Room(props) {
         fetch('/api/leave-room/', requestData).then((_response) => {navigate('/')})
     }
 
-
     const renderSettingsButton = () => {
         return (
             <Grid item xs={12}>
@@ -54,7 +54,7 @@ export default function Room(props) {
         return (
         <Grid container spacing={1} alignItems="center" direction="column">
             <Grid item xs={12}>
-                <CreateRoomPage update={true} votesToSkip={votesToSkip} guestCanPause={guestCanPause} roomCode={roomCode} updateCallback={null}></CreateRoomPage>
+                <CreateRoomPage update={true} votesToSkip={votesToSkip} guestCanPause={guestCanPause} roomCode={roomCode} updateCallback={getRoomDetails}></CreateRoomPage>
             </Grid>
             <Grid item xs={12}>
                 <Button color="primary" variant="contained" onClick={() => setShowSettings(false)}>
