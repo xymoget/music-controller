@@ -2,3 +2,4 @@
 api/__pycache__
 music_controller/__pycache__
 frontend/node_modules
+spotify/credentials.py
