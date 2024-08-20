@@ -12,6 +12,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { FormLabel, Collapse } from "@material-ui/core";
 
 export default function CreateRoomPage(props) {
+    console.log(props.guestCanPause);
     const defaultProps = {
         votesToSkip: 2,
         guestCanPause: true,
@@ -20,14 +21,11 @@ export default function CreateRoomPage(props) {
         updateCallback: () => {},
     }
 
-    const [guestCanPause, setGuestCanPause] = useState(props.guestCanPause || defaultProps.guestCanPause);
+    const [guestCanPause, setGuestCanPause] = useState(props.guestCanPause ? typeof props.guestCanPause == "boolean" : defaultProps.guestCanPause);
     const [votesToSkip, setVotesToSkip] = useState(props.votesToSkip || defaultProps.votesToSkip);
     const [msg, setMsg] = useState(null)
-    props.update = props.update || defaultProps.update
-    props.roomCode = props.roomCode || defaultProps.roomCode
-    props.updateCallback = props.updateCallback || defaultProps.
-    console.log(updateCallback)
-    console.log(props)
+    props.roomCode = props.roomCode || defaultProps.roomCode;
+    props.updateCallback = props.updateCallback || defaultProps.updateCallback
     const navigate = useNavigate();
 
     const handleVotesChange = (e) => {
@@ -103,7 +101,7 @@ export default function CreateRoomPage(props) {
 
     return (<Grid container spacing={1}>
         <Grid item xs={12} align="center">
-            <Collapse in={errorMsg != null || successMsg != null}>
+            <Collapse in={msg != null}>
                 {msg}
             </Collapse>
         </Grid>
@@ -117,7 +115,7 @@ export default function CreateRoomPage(props) {
                 <FormHelperText>
                     <div align='center'>Guest Control of Playback State</div>
                 </FormHelperText>
-                <RadioGroup row defaultValue={props.guestCanPause.toString()} onChange={handleGuestCanPauseChange}>
+                <RadioGroup row defaultValue={guestCanPause.toString()} onChange={handleGuestCanPauseChange}>
                     <FormControlLabel value="true" control={<Radio color="primary"></Radio>} label="Play/Pause" labelPlacement="bottom"/>
                     <FormControlLabel value="false" control={<Radio color="secondary"></Radio>} label="No Control" labelPlacement="bottom"/>
                 </RadioGroup>
