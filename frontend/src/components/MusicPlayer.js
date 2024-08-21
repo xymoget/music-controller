@@ -4,6 +4,27 @@ import { PlayArrow, SkipNext, Pause } from "@material-ui/icons"
 
 export default function MusicPlayer(props) {
     const songProgress = (props.time / props.duration) * 100;
+
+    const pauseSong = () => {
+        const requestData = {
+            method: "PUT",
+            headers: { 
+                "Content-Type": "application/json" 
+            }
+        };
+        fetch("/spotify/pause/", requestData);
+    }
+
+    const playSong = () => {
+        const requestData = {
+            method: "PUT",
+            headers: { 
+                "Content-Type": "application/json" 
+            }
+        };
+        fetch("/spotify/play/", requestData);
+    }
+
     return (
         <Card>
             <Grid container alignItems="center">
@@ -18,7 +39,7 @@ export default function MusicPlayer(props) {
                         { props.artist }
                     </Typography>
                     <div>
-                        <IconButton>
+                        <IconButton onClick={ props.is_playing ? pauseSong : playSong}>
                             {props.is_playing ? <Pause></Pause> : <PlayArrow></PlayArrow>}
                         </IconButton>
                         <IconButton>
